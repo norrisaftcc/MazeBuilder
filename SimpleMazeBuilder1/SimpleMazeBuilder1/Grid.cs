@@ -76,6 +76,8 @@ namespace SimpleMazeBuilder1
         {
             return this.Rows * this.Columns;
         }
+
+        
     }
        
 }

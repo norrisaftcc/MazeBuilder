@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.btnInitGrid = new System.Windows.Forms.Button();
-            this.btnRandomCell = new System.Windows.Forms.Button();
+            this.btnDoBinaryTreeMaze = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnInitGrid
@@ -42,22 +42,22 @@
             this.btnInitGrid.UseVisualStyleBackColor = true;
             this.btnInitGrid.Click += new System.EventHandler(this.btnInitGrid_Click);
             // 
-            // btnRandomCell
+            // btnDoBinaryTreeMaze
             // 
-            this.btnRandomCell.Location = new System.Drawing.Point(32, 80);
-            this.btnRandomCell.Name = "btnRandomCell";
-            this.btnRandomCell.Size = new System.Drawing.Size(96, 23);
-            this.btnRandomCell.TabIndex = 1;
-            this.btnRandomCell.Text = "Random Cell";
-            this.btnRandomCell.UseVisualStyleBackColor = true;
-            this.btnRandomCell.Click += new System.EventHandler(this.btnRandomCell_Click);
+            this.btnDoBinaryTreeMaze.Location = new System.Drawing.Point(32, 80);
+            this.btnDoBinaryTreeMaze.Name = "btnDoBinaryTreeMaze";
+            this.btnDoBinaryTreeMaze.Size = new System.Drawing.Size(96, 23);
+            this.btnDoBinaryTreeMaze.TabIndex = 1;
+            this.btnDoBinaryTreeMaze.Text = "Binary Tree Maze";
+            this.btnDoBinaryTreeMaze.UseVisualStyleBackColor = true;
+            this.btnDoBinaryTreeMaze.Click += new System.EventHandler(this.btnRandomCell_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.btnRandomCell);
+            this.Controls.Add(this.btnDoBinaryTreeMaze);
             this.Controls.Add(this.btnInitGrid);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -68,7 +68,7 @@
         #endregion
 
         private System.Windows.Forms.Button btnInitGrid;
-        private System.Windows.Forms.Button btnRandomCell;
+        private System.Windows.Forms.Button btnDoBinaryTreeMaze;
     }
 }
 

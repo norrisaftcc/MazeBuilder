@@ -30,9 +30,10 @@ namespace SimpleMazeBuilder1
         {
             if (grid != null)
             {
-                Cell c = grid.getRandomCell();
-                Console.WriteLine(c.ToString());
+                BinaryTree bt = new BinaryTree();
+                bt.buildMaze(grid);
             }
+            Console.WriteLine("Maze Built");
         }
     }
 }
