@@ -35,5 +35,14 @@ namespace SimpleMazeBuilder1
             }
             Console.WriteLine("Maze Built");
         }
+
+        private void btnUpdateTextBox_Click(object sender, EventArgs e)
+        {
+            if (grid != null)
+            {
+                String output = grid.toString();
+                textOutput.Text = output;
+            }
+        }
     }
 }

@@ -43,6 +43,13 @@ namespace SimpleMazeBuilder1
             }
         }
 
+        public bool isLinked(Cell c)
+        {
+            if (c == null) { return false; }
+            if (this.Links.IndexOf(c) == -1) { return false;  }
+            return true;
+        }
+
         public List<Cell> getNeighbors()
         {
             List<Cell> neighbors = new List<Cell>();
