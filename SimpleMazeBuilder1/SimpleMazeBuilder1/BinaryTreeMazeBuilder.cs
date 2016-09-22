@@ -7,25 +7,13 @@ using System.Threading.Tasks;
 
 namespace SimpleMazeBuilder1
 {
-    class BinaryTree
+    public class BinaryTreeMazeBuilder: MazeBuilder
     {
         // build a maze from a Grid using the BinaryTree method
-        Random r;
-        public BinaryTree()
+       
+        public BinaryTreeMazeBuilder()
         {
-            // Random is terrible, so we'll seed it using a different RNG
-            using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-            {
-                // Buffer storage.
-                byte[] data = new byte[4];
-                rng.GetBytes(data);
-
-                // Convert to int 32.
-                int value = BitConverter.ToInt32(data, 0);
-                Console.WriteLine(value);
-                r = new Random(value);
-            }        
-    }
+        }
 
         public void buildMaze(Grid grid)
         {
@@ -63,7 +51,7 @@ namespace SimpleMazeBuilder1
             {
                 return;
             }
-            int roll = r.Next(20);
+            int roll = rand.Next(20);
             int index = roll % n; // pick one of the possible n or e exits
             Console.Write("("+roll+","+n+","+index+")");
             Cell neighbor = null;

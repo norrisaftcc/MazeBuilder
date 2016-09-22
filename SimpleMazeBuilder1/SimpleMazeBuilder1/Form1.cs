@@ -30,7 +30,7 @@ namespace SimpleMazeBuilder1
         {
             if (grid != null)
             {
-                BinaryTree bt = new BinaryTree();
+                BinaryTreeMazeBuilder bt = new BinaryTreeMazeBuilder();
                 bt.buildMaze(grid);
             }
             Console.WriteLine("Maze Built");
