@@ -35,6 +35,7 @@
             this.btnUpdateTextBox = new System.Windows.Forms.Button();
             this.btnSidewinder = new System.Windows.Forms.Button();
             this.btnAldousBroder = new System.Windows.Forms.Button();
+            this.btnBitmapDraw = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnInitGrid
@@ -77,11 +78,11 @@
             // 
             // btnUpdateTextBox
             // 
-            this.btnUpdateTextBox.Location = new System.Drawing.Point(265, 21);
+            this.btnUpdateTextBox.Location = new System.Drawing.Point(237, 21);
             this.btnUpdateTextBox.Name = "btnUpdateTextBox";
-            this.btnUpdateTextBox.Size = new System.Drawing.Size(75, 23);
+            this.btnUpdateTextBox.Size = new System.Drawing.Size(88, 23);
             this.btnUpdateTextBox.TabIndex = 4;
-            this.btnUpdateTextBox.Text = "Update";
+            this.btnUpdateTextBox.Text = "Update(ASCII)";
             this.btnUpdateTextBox.UseVisualStyleBackColor = true;
             this.btnUpdateTextBox.Click += new System.EventHandler(this.btnUpdateTextBox_Click);
             // 
@@ -105,11 +106,22 @@
             this.btnAldousBroder.UseVisualStyleBackColor = true;
             this.btnAldousBroder.Click += new System.EventHandler(this.btnAldousBroder_Click);
             // 
+            // btnBitmapDraw
+            // 
+            this.btnBitmapDraw.Location = new System.Drawing.Point(377, 20);
+            this.btnBitmapDraw.Name = "btnBitmapDraw";
+            this.btnBitmapDraw.Size = new System.Drawing.Size(75, 23);
+            this.btnBitmapDraw.TabIndex = 7;
+            this.btnBitmapDraw.Text = "Bitmap";
+            this.btnBitmapDraw.UseVisualStyleBackColor = true;
+            this.btnBitmapDraw.Click += new System.EventHandler(this.btnBitmapDraw_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 473);
+            this.Controls.Add(this.btnBitmapDraw);
             this.Controls.Add(this.btnAldousBroder);
             this.Controls.Add(this.btnSidewinder);
             this.Controls.Add(this.btnUpdateTextBox);
@@ -133,6 +145,7 @@
         private System.Windows.Forms.Button btnUpdateTextBox;
         private System.Windows.Forms.Button btnSidewinder;
         private System.Windows.Forms.Button btnAldousBroder;
+        private System.Windows.Forms.Button btnBitmapDraw;
     }
 }
 
