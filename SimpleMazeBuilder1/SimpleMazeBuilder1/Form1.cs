@@ -91,34 +91,34 @@ namespace SimpleMazeBuilder1
             System.Drawing.Pen pen;
             pen = new System.Drawing.Pen(System.Drawing.Color.Black);
             // currently broken
-            for (int i=0; i<grid.Rows; i++)
+            for (int col=0; col<grid.Columns; col++)
             {
-                for (int j=0; j<grid.Columns; j++)
+                for (int row=0; row<grid.Rows; row++)
                 {
                     // for each cell
-                    Cell c = grid.Cells[i, j];
-                    int x1 = i * cell_size;
-                    int y1 = j * cell_size;
-                    int x2 = (i + 1) * cell_size;
-                    int y2 = (j + 1) * cell_size;
+                    Cell c = grid.Cells[col, row];
+                    int x1 = c.Column * cell_size;
+                    int y1 = c.Row * cell_size;
+                    int x2 = (c.Column + 1) * cell_size;
+                    int y2 = (c.Row + 1) * cell_size;
                     x1 += x_init;
                     x2 += x_init;
                     y1 += y_init;
                     y2 += y_init;
 
-                    if (c.North == null)
+                    if (c.North == null || !c.isLinked(c.North))
                     {
                         formGraphics.DrawLine(pen, x1, y1, x2, y1);
                     }
-                    if (c.West == null)
+                    if (c.West == null || !c.isLinked(c.West))
                     {
                         formGraphics.DrawLine(pen, x1, y1, x1, y2);
                     }
-                    if (c.East != null && !c.isLinked(c.East))
+                    if (c.East == null || !c.isLinked(c.East))
                     {
                         formGraphics.DrawLine(pen, x2, y1, x2, y2);
                     }
-                    if (c.South !=null && !c.isLinked(c.South))
+                    if (c.South == null || !c.isLinked(c.South))
                     {
                         formGraphics.DrawLine(pen, x1, y2, x2, y2);
                     }
