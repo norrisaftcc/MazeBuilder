@@ -17,6 +17,8 @@ namespace SimpleMazeBuilder1
         public Form1()
         {
             InitializeComponent();
+            // create a 10x10 grid 
+            grid = new Grid(10, 10);
         }
 
         private void btnInitGrid_Click(object sender, EventArgs e)
@@ -33,7 +35,7 @@ namespace SimpleMazeBuilder1
                 BinaryTreeMazeBuilder bt = new BinaryTreeMazeBuilder();
                 bt.buildMaze(grid);
             }
-            Console.WriteLine("Maze Built");
+            Console.WriteLine("Binary Tree Maze Built");
         }
 
         private void btnUpdateTextBox_Click(object sender, EventArgs e)
@@ -43,6 +45,28 @@ namespace SimpleMazeBuilder1
                 String output = grid.toString();
                 textOutput.Text = output;
             }
+        }
+
+        private void btnSidewinder_Click(object sender, EventArgs e)
+        {
+            if (grid != null)
+            {
+                SidewinderMazeBuilder sw = new SidewinderMazeBuilder();
+                sw.buildMaze(grid);
+            }
+            Console.WriteLine("Sidewinder Maze Built");
+        }
+
+        private void btnAldousBroder_Click(object sender, EventArgs e)
+        {
+            // don't try to run random walk on a previously built maze -- it never exits
+            // so always init grid
+            // create a 10x10 grid 
+            grid = new Grid(10, 10);
+            AldousBroderMazeBuilder ab = new AldousBroderMazeBuilder();
+            ab.buildMaze(grid);
+            
+            Console.WriteLine("Aldous-Broder Maze Built");
         }
     }
 }

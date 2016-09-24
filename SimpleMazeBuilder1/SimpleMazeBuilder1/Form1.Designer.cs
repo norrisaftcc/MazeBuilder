@@ -33,6 +33,8 @@
             this.textOutput = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnUpdateTextBox = new System.Windows.Forms.Button();
+            this.btnSidewinder = new System.Windows.Forms.Button();
+            this.btnAldousBroder = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnInitGrid
@@ -47,7 +49,7 @@
             // 
             // btnDoBinaryTreeMaze
             // 
-            this.btnDoBinaryTreeMaze.Location = new System.Drawing.Point(12, 54);
+            this.btnDoBinaryTreeMaze.Location = new System.Drawing.Point(11, 70);
             this.btnDoBinaryTreeMaze.Name = "btnDoBinaryTreeMaze";
             this.btnDoBinaryTreeMaze.Size = new System.Drawing.Size(96, 23);
             this.btnDoBinaryTreeMaze.TabIndex = 1;
@@ -83,11 +85,33 @@
             this.btnUpdateTextBox.UseVisualStyleBackColor = true;
             this.btnUpdateTextBox.Click += new System.EventHandler(this.btnUpdateTextBox_Click);
             // 
+            // btnSidewinder
+            // 
+            this.btnSidewinder.Location = new System.Drawing.Point(12, 108);
+            this.btnSidewinder.Name = "btnSidewinder";
+            this.btnSidewinder.Size = new System.Drawing.Size(95, 23);
+            this.btnSidewinder.TabIndex = 5;
+            this.btnSidewinder.Text = "Sidewinder";
+            this.btnSidewinder.UseVisualStyleBackColor = true;
+            this.btnSidewinder.Click += new System.EventHandler(this.btnSidewinder_Click);
+            // 
+            // btnAldousBroder
+            // 
+            this.btnAldousBroder.Location = new System.Drawing.Point(13, 148);
+            this.btnAldousBroder.Name = "btnAldousBroder";
+            this.btnAldousBroder.Size = new System.Drawing.Size(94, 23);
+            this.btnAldousBroder.TabIndex = 6;
+            this.btnAldousBroder.Text = "Aldous-Broder";
+            this.btnAldousBroder.UseVisualStyleBackColor = true;
+            this.btnAldousBroder.Click += new System.EventHandler(this.btnAldousBroder_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 473);
+            this.Controls.Add(this.btnAldousBroder);
+            this.Controls.Add(this.btnSidewinder);
             this.Controls.Add(this.btnUpdateTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textOutput);
@@ -107,6 +131,8 @@
         private System.Windows.Forms.TextBox textOutput;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnUpdateTextBox;
+        private System.Windows.Forms.Button btnSidewinder;
+        private System.Windows.Forms.Button btnAldousBroder;
     }
 }
 

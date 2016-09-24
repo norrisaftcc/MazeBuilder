@@ -22,11 +22,14 @@ namespace SimpleMazeBuilder1
 
                 // Convert to int 32.
                 int value = BitConverter.ToInt32(data, 0);
-                Console.WriteLine(value);
+                Console.WriteLine("MazeBuilder random seed: " + value);
                 rand = new Random(value);
             }
         }
 
-        //
+        public void buildMaze(Grid g)
+        {
+            throw new NotImplementedException("You must use a subclass of MazeBuilder instead");
+        }
     }
 }

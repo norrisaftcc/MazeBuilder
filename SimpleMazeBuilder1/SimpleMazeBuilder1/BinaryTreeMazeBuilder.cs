@@ -51,6 +51,7 @@ namespace SimpleMazeBuilder1
             {
                 return;
             }
+            // using a d20 roll, modulus the # of exits available, to pick exit carved.
             int roll = rand.Next(20);
             int index = roll % n; // pick one of the possible n or e exits
             Console.Write("("+roll+","+n+","+index+")");
