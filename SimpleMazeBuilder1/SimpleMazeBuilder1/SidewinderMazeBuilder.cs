@@ -17,7 +17,7 @@ namespace SimpleMazeBuilder1
         // to the north if possible, finish the run, and start a new run. 
         // else link this cell to the east.
 
-        public void buildMaze(Grid grid)
+        public new void buildMaze(Grid grid)
         {
             List<Cell> run = new List<Cell>();
             Cell cell, member;
@@ -27,7 +27,8 @@ namespace SimpleMazeBuilder1
             // iterate through rows
             for (int i = 0; i < grid.Rows; i++)
             {
-                for (int j  =0; j < grid.Columns; j++) {
+                for (int j = 0; j < grid.Columns; j++)
+                {
                     cell = grid.Cells[i, j];
                     run.Add(cell);
 
@@ -41,7 +42,7 @@ namespace SimpleMazeBuilder1
                     if (bShouldCloseOut)
                     {
                         int sample = rand.Next(run.Count);
-                        member = run[sample];   
+                        member = run[sample];
                         if (member.North != null)
                         {
                             member.link(member.North);
@@ -53,7 +54,7 @@ namespace SimpleMazeBuilder1
                         cell.link(cell.East);
                     }
                 } // for columns
-                
+
             } // for rows
         }
 

@@ -15,18 +15,18 @@ namespace SimpleMazeBuilder1
         {
         }
 
-        public void buildMaze(Grid grid)
+        public new void buildMaze(Grid grid)
         {
 
             int rows = grid.Rows;
             int cols = grid.Columns;
             // iterate over each cell
             // start at the bottom [rows-1,0] and move upwards
-            for (int i = rows-1; i >= 0 ; i--)
+            for (int i = rows - 1; i >= 0; i--)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    Cell c = grid.Cells[i,j];
+                    Cell c = grid.Cells[i, j];
                     processCell(c);
                 }
             }

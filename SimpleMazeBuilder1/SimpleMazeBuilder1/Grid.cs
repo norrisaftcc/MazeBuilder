@@ -71,7 +71,7 @@ namespace SimpleMazeBuilder1
             int row = rand.Next(this.Rows);
             int col = rand.Next(this.Columns);
 
-            return this.Cells[row, col];
+            return this.Cells[col, row];
         }
 
         public int getSize()

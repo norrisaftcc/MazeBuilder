@@ -10,7 +10,7 @@ namespace SimpleMazeBuilder1
     {
         // random walk using the Aldous-Broder algorithm.
 
-        public void buildMaze(Grid grid)
+        public new void buildMaze(Grid grid)
         {
             Cell cell, neighbor;
             // start in a random location within the grid
@@ -20,7 +20,7 @@ namespace SimpleMazeBuilder1
 
             cell = grid.Cells[x, y];
 
-            while (unvisited > 0) // continue rand walk until all cells are visited
+            while (unvisited > 0) // continue random walk until all cells are visited
             {
                 List<Cell> neighbors = cell.getNeighbors();
                 int randNeighbor = rand.Next(neighbors.Count);
@@ -30,7 +30,7 @@ namespace SimpleMazeBuilder1
                 {
                     // if no links in neighbor, it's unvisited, so link it and count it as visited
                     cell.link(neighbor);
-                    unvisited -= 1; 
+                    unvisited -= 1;
                 }
                 cell = neighbor; // continue the random walk 
             }
