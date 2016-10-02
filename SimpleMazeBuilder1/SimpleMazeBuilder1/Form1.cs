@@ -129,5 +129,17 @@ namespace SimpleMazeBuilder1
             // cleanup
             formGraphics.Dispose();
         }
+
+        private void btnDistanceCalc_Click(object sender, EventArgs e)
+        {
+            if (grid == null)
+            {
+                return;
+            }
+            DistanceCalculator dc = new DistanceCalculator();
+            dc.ClearDistanceInfo(grid);
+            dc.CalculateDistances(grid, grid.Cells[0, 0]);
+            
+        }
     }
 }

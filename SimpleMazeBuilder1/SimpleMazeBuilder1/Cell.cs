@@ -11,6 +11,9 @@ namespace SimpleMazeBuilder1
         public int Row { get; set; }
         public int Column { get; set; }
 
+        // distance value for Dijsktra's Algorithm
+        public int DistanceFromStart { get; set; }
+
         public Cell North { get; set; }
         public Cell South { get; set; }
         public Cell East  { get; set; }

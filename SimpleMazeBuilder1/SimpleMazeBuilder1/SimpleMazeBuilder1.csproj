@@ -49,6 +49,7 @@
     <Compile Include="AldousBroderMazeBuilder.cs" />
     <Compile Include="BinaryTreeMazeBuilder.cs" />
     <Compile Include="Cell.cs" />
+    <Compile Include="DistanceCalculator.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

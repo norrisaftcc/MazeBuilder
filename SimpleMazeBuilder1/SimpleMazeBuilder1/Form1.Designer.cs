@@ -36,6 +36,7 @@
             this.btnSidewinder = new System.Windows.Forms.Button();
             this.btnAldousBroder = new System.Windows.Forms.Button();
             this.btnBitmapDraw = new System.Windows.Forms.Button();
+            this.btnDistanceCalc = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnInitGrid
@@ -116,11 +117,22 @@
             this.btnBitmapDraw.UseVisualStyleBackColor = true;
             this.btnBitmapDraw.Click += new System.EventHandler(this.btnBitmapDraw_Click);
             // 
+            // btnDistanceCalc
+            // 
+            this.btnDistanceCalc.Location = new System.Drawing.Point(11, 374);
+            this.btnDistanceCalc.Name = "btnDistanceCalc";
+            this.btnDistanceCalc.Size = new System.Drawing.Size(96, 39);
+            this.btnDistanceCalc.TabIndex = 8;
+            this.btnDistanceCalc.Text = "Distance from (0,0)";
+            this.btnDistanceCalc.UseVisualStyleBackColor = true;
+            this.btnDistanceCalc.Click += new System.EventHandler(this.btnDistanceCalc_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(549, 473);
+            this.Controls.Add(this.btnDistanceCalc);
             this.Controls.Add(this.btnBitmapDraw);
             this.Controls.Add(this.btnAldousBroder);
             this.Controls.Add(this.btnSidewinder);
@@ -146,6 +158,7 @@
         private System.Windows.Forms.Button btnSidewinder;
         private System.Windows.Forms.Button btnAldousBroder;
         private System.Windows.Forms.Button btnBitmapDraw;
+        private System.Windows.Forms.Button btnDistanceCalc;
     }
 }
 

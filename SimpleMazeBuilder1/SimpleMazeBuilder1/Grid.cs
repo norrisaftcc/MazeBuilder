@@ -113,6 +113,7 @@ namespace SimpleMazeBuilder1
                     {
                         eastBound = "|";
                     }
+                    body = getBodyText(c);
                     top = top + body + eastBound;
 
                     if (c.isLinked(c.South))
@@ -133,6 +134,26 @@ namespace SimpleMazeBuilder1
 
             Console.WriteLine(output);
             return output;
+        }
+
+        private string getBodyText(Cell c)
+        {
+            String contents;
+            int dist = c.DistanceFromStart;
+            if (dist == -1 || dist == 0)
+            {
+                return "   "; // 3 spaces
+            }
+
+            if (dist < 10)
+            {
+                contents = " " + dist.ToString("D1") + " ";
+            }
+            else
+            {
+                contents = " " + c.DistanceFromStart.ToString("D2");
+            }
+            return contents;
         }
         
     }
