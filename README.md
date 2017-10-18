@@ -9,3 +9,5 @@ Cell and Grid initialization are complete.
 # To Do
 - BinarySearch algorithm
 - Maze ASCII display
+
+# made changes
