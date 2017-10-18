@@ -119,7 +119,7 @@
             // 
             // btnDistanceCalc
             // 
-            this.btnDistanceCalc.Location = new System.Drawing.Point(11, 374);
+            this.btnDistanceCalc.Location = new System.Drawing.Point(13, 364);
             this.btnDistanceCalc.Name = "btnDistanceCalc";
             this.btnDistanceCalc.Size = new System.Drawing.Size(96, 39);
             this.btnDistanceCalc.TabIndex = 8;

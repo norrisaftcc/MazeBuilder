@@ -13,11 +13,13 @@ namespace SimpleMazeBuilder1
     public partial class Form1 : Form
     {
         public Grid grid;
+        int x = 0;
 
         public Form1()
         {
             InitializeComponent();
             // create a 10x10 grid 
+
             grid = new Grid(10, 10);
         }
 
