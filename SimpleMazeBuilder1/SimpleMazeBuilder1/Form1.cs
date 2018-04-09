@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace SimpleMazeBuilder1
 {
+    // todo: add regions
     public partial class Form1 : Form
     {
         public Grid grid;
