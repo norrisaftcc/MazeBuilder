@@ -45,7 +45,7 @@
             this.btnInitGrid.Name = "btnInitGrid";
             this.btnInitGrid.Size = new System.Drawing.Size(96, 23);
             this.btnInitGrid.TabIndex = 0;
-            this.btnInitGrid.Text = "Init 10x10 Grid";
+            this.btnInitGrid.Text = "Init 10 x 10 Grid";
             this.btnInitGrid.UseVisualStyleBackColor = true;
             this.btnInitGrid.Click += new System.EventHandler(this.btnInitGrid_Click);
             // 
