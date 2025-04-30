@@ -102,3 +102,14 @@ Once students understand the basic implementation, here are some challenges they
 5. Add multiple targets that must be visited in the most efficient order (TSP problem)
 
 Understanding Dijkstra's algorithm provides a foundation for these more advanced explorations in algorithm design and optimization.
+
+## Other Notes
+
+Integration Instructions
+To integrate this into your existing codebase:
+
+Add the Distances and Dijkstra classes to your program
+Add the displayWithPath function
+Either replace your main function with dijkstraDemo, or modify your existing main to include the pathfinding demonstration
+
+The implementation is thoroughly commented to explain the concepts to students and demonstrate both OOP and algorithmic principles.
