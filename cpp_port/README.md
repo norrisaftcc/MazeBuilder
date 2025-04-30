@@ -126,3 +126,27 @@ Studying how the same algorithm is expressed in different programming languages 
 4. Understand how to retain program structure while adapting to language-specific features
 
 The current C++ implementation preserves the original algorithm's logic while taking advantage of C++'s performance characteristics and expressing the solution using both object-oriented and procedural techniques.
+
+### Change Notes
+
+The updated section covers:
+
+The language transition path: Ruby → C# → C++
+What makes porting interesting:
+
+Syntax differences between the languages
+Type system adaptations (dynamic → static typing)
+Memory management differences
+Standard library variations
+Performance considerations
+
+
+Educational value of studying ported code:
+
+Understanding fundamental concepts that transcend specific languages
+Appreciating different programming paradigms
+Developing language adaptability
+Learning how to preserve program structure while adapting to language features
+
+This addition provides students with context about how software evolves and the challenges and benefits of porting code between different programming languages. It shows that understanding core programming concepts is valuable because these skills transfer between languages, even as syntax and specific features change.
+The porting process is particularly interesting in this case because it traces a path from a dynamic, interpreted language (Ruby) through a managed, object-oriented language (C#) to a more systems-oriented language (C++). Each step brings different trade-offs in terms of development speed, runtime performance, memory management, and expressiveness.
