@@ -11,7 +11,9 @@ from pathfinding.distances import Distances
 
 # For debugging
 import logging
-logging.basicConfig(level=logging.DEBUG)
+# Set to ERROR level to suppress debug messages during normal operation
+# Change to DEBUG for development/troubleshooting
+logging.basicConfig(level=logging.ERROR)
 
 class Dijkstra:
     """

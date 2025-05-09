@@ -14,7 +14,7 @@ from algorithms.sidewinder import SidewinderMaze
 from algorithms.aldous_broder import AldousBroderMaze
 from pathfinding.dijkstra import Dijkstra
 
-def display_with_path(grid, path, show_distances=False, distances=None, use_color=True):
+def display_with_path(grid, path, show_distances=False, distances=None, use_color=True, theme_name="default"):
     """
     Display the maze with a highlighted solution path and optionally show distances.
 
@@ -24,114 +24,22 @@ def display_with_path(grid, path, show_distances=False, distances=None, use_colo
         show_distances: Whether to show distances in each cell
         distances: The distances object (if show_distances is True)
         use_color: Whether to use color in the output
+        theme_name: The name of the theme to use for rendering
     """
-    # Define entrance and exit for special marking
-    entrance = grid.at(grid.rows-1, 0)  # Bottom left
-    exit = grid.at(0, grid.cols-1)      # Top right
-    # Disable colors on Windows unless running in a modern terminal
-    if platform.system() == "Windows" and "TERM" not in os.environ:
-        use_color = False
+    # Import here to avoid circular import issues
+    from visualization.text_renderer import TextRenderer
 
-    # ANSI color codes
-    if use_color:
-        RESET = "\033[0m"
-        GREEN_BG = "\033[42m"
-        GREEN_TEXT = "\033[32m"
-        CYAN_TEXT = "\033[36m"
-        RED_TEXT = "\033[31m"
-        YELLOW_TEXT = "\033[33m"
-        BOLD = "\033[1m"
-    else:
-        RESET = ""
-        GREEN_BG = ""
-        GREEN_TEXT = ""
-        CYAN_TEXT = ""
-        RED_TEXT = ""
-        YELLOW_TEXT = ""
-        BOLD = ""
+    # Create a text renderer with the specified theme
+    renderer = TextRenderer(theme_name=theme_name, use_color=use_color)
 
-    # Helper function to check if a cell is on the path
-    def is_on_path(row, col):
-        for cell in path:
-            if cell.row == row and cell.col == col:
-                return True
-        return False
-
-    # Display the top border
-    output = ['+' + '---+' * grid.cols]
-
-    for r in range(grid.rows):
-        # Display cell contents and eastern boundaries
-        row = ['|']
-        eastern_boundary = ['+']
-
-        for c in range(grid.cols):
-            cell = grid.at(r, c)
-
-            # Cell contents
-            # Special rendering for entrance and exit cells
-            if cell.row == entrance.row and cell.col == entrance.col:
-                # Entrance cell (bottom left)
-                if is_on_path(r, c) and distances:
-                    dist = distances.get_distance(cell)
-                    if dist < 10:
-                        content = f"{YELLOW_TEXT}{BOLD} E{dist}{RESET}"
-                    else:
-                        content = f"{YELLOW_TEXT}{BOLD}E{dist}{RESET}"
-                else:
-                    content = f"{YELLOW_TEXT}{BOLD} E {RESET}"
-            elif cell.row == exit.row and cell.col == exit.col:
-                # Exit cell (top right)
-                if is_on_path(r, c) and distances:
-                    dist = distances.get_distance(cell)
-                    # Exit always has distance 0
-                    content = f"{RED_TEXT}{BOLD} X {RESET}"
-                else:
-                    content = f"{RED_TEXT}{BOLD} X {RESET}"
-            elif is_on_path(r, c):
-                # Path cell always shows distance to exit
-                if distances:
-                    dist = distances.get_distance(cell)
-                    if dist < 10:
-                        content = f"{GREEN_TEXT} {dist} {RESET}"
-                    else:
-                        content = f"{GREEN_TEXT}{dist}{RESET} "
-                else:
-                    content = f"{GREEN_TEXT} * {RESET}"
-            elif show_distances and distances:
-                # Regular cell with distance
-                dist = distances.get_distance(cell)
-                if dist == sys.maxsize:  # Unreachable cell
-                    content = "   "
-                elif dist < 10:
-                    content = f"{CYAN_TEXT} {dist} {RESET}"
-                else:
-                    content = f"{CYAN_TEXT}{dist}{RESET} "
-            else:
-                # Regular empty cell
-                content = "   "
-
-            row.append(content)
-
-            # Eastern boundary
-            if c < grid.cols - 1 and cell.linked(Cell.EAST):
-                row.append(' ')
-            else:
-                row.append('|')
-
-            # Southern boundary
-            if r < grid.rows - 1 and cell.linked(Cell.SOUTH):
-                eastern_boundary.append('   +')
-            else:
-                eastern_boundary.append('---+')
-
-        output.append(''.join(row))
-        output.append(''.join(eastern_boundary))
-
-    return '\n'.join(output)
+    # Render the maze
+    return renderer.render_maze(grid, solution_path=path, show_distances=show_distances, distances=distances)
 
 def main():
     """Main entry point for the MazeBuilder program."""
+    # Dynamically import ThemeManager to get available themes
+    from visualization.themes import ThemeManager
+
     parser = argparse.ArgumentParser(description='Generate and display mazes')
     parser.add_argument('rows', nargs='?', type=int, default=10, help='Number of rows')
     parser.add_argument('cols', nargs='?', type=int, default=10, help='Number of columns')
@@ -142,6 +50,8 @@ def main():
     parser.add_argument('--color', action='store_true', help='Use color in output')
     parser.add_argument('--explain', action='store_true', help='Show explanation of the algorithm')
     parser.add_argument('--seed', type=int, help='Random seed for reproducible maze generation')
+    parser.add_argument('--theme', '-t', choices=ThemeManager.list_themes(),
+                        default='default', help='Visual theme to use for display')
     args = parser.parse_args()
 
     # Create grid
@@ -200,7 +110,8 @@ def main():
                 solution,
                 show_distances=True,  # Always show distances
                 distances=distances,
-                use_color=args.color
+                use_color=args.color,
+                theme_name=args.theme
             ))
             print()
 
