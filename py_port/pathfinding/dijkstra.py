@@ -63,14 +63,19 @@ class Dijkstra:
         # Calculate distances from start to all cells
         distances = Dijkstra.calculate_distances(grid, start)
 
+        # Debug output
+        logging.debug(f"Calculating shortest path from ({start.row},{start.col}) to ({end.row},{end.col})")
+        logging.debug(f"End cell distance: {distances.get_distance(end)}")
+
+        # If end is unreachable, return empty path
+        if distances.get_distance(end) == sys.maxsize:
+            logging.debug("End cell is unreachable")
+            return []
+
         # Reconstruct the path from end to start
         path = []
         current = end
         path.append(current)
-
-        # If end is unreachable, return empty path
-        if distances.get_distance(end) == sys.maxsize:
-            return []
 
         # Walk backward from end to start, always choosing the neighbor
         # with the smallest distance value
@@ -78,6 +83,7 @@ class Dijkstra:
             row = current.row
             col = current.col
             current_distance = distances.get_distance(current)
+            logging.debug(f"Current cell: ({row},{col}) with distance {current_distance}")
 
             next_cell = None
             next_distance = current_distance
@@ -94,12 +100,16 @@ class Dijkstra:
                 neighbor = grid.at(neighbor_row, neighbor_col)
                 neighbor_distance = distances.get_distance(neighbor)
 
+                logging.debug(f"  Checking neighbor ({neighbor_row},{neighbor_col}) with distance {neighbor_distance}")
+
                 # If this neighbor is closer to the start
                 if neighbor_distance < next_distance:
                     next_cell = neighbor
                     next_distance = neighbor_distance
+                    logging.debug(f"    Found better path via ({neighbor_row},{neighbor_col})")
 
             if next_cell is None:
+                logging.debug("Error: No path found! Breaking out of loop.")
                 break  # Something went wrong
 
             path.append(next_cell)
@@ -107,6 +117,7 @@ class Dijkstra:
 
         # Reverse the path so it goes from start to end
         path.reverse()
+        logging.debug(f"Path length: {len(path)}")
         return path
     
     @staticmethod

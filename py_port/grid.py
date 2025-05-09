@@ -13,10 +13,10 @@ class Grid:
     """
     # Direction offsets (row, col)
     DIRECTION_OFFSETS = {
-        Cell.NORTH: (0, -1),
-        Cell.SOUTH: (0, 1),
-        Cell.EAST: (1, 0),
-        Cell.WEST: (-1, 0)
+        Cell.NORTH: (-1, 0),  # North decreases row
+        Cell.SOUTH: (1, 0),   # South increases row
+        Cell.EAST: (0, 1),    # East increases column
+        Cell.WEST: (0, -1)    # West decreases column
     }
     
     def __init__(self, rows, cols):
