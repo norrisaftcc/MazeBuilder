@@ -167,3 +167,10 @@ class TestBinaryTreeMaze:
         
         # Northeast corner has no links
         assert grid.at(0, 2).get_links() == []
+
+    def test_explain_method(self):
+        """Test that the explain method returns a non-empty string."""
+        explanation = BinaryTreeMaze.explain()
+        assert isinstance(explanation, str)
+        assert len(explanation) > 0
+        assert "BINARY TREE ALGORITHM" in explanation

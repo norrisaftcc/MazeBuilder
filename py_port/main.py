@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from cell import Cell
 from grid import Grid
 from algorithms.binary_tree import BinaryTreeMaze
+from algorithms.sidewinder import SidewinderMaze
 from pathfinding.dijkstra import Dijkstra
 
 def display_with_path(grid, path, show_distances=False, distances=None, use_color=True):
@@ -104,17 +105,35 @@ def main():
     parser = argparse.ArgumentParser(description='Generate and display mazes')
     parser.add_argument('rows', nargs='?', type=int, default=10, help='Number of rows')
     parser.add_argument('cols', nargs='?', type=int, default=10, help='Number of columns')
+    parser.add_argument('--algorithm', '-a', choices=['binary', 'sidewinder'], default='binary',
+                        help='Maze generation algorithm to use')
     parser.add_argument('--solve', action='store_true', help='Display solution path')
     parser.add_argument('--distances', action='store_true', help='Show distances from starting point')
     parser.add_argument('--color', action='store_true', help='Use color in output')
+    parser.add_argument('--explain', action='store_true', help='Show explanation of the algorithm')
     args = parser.parse_args()
 
-    # Create grid and generate maze
+    # Create grid
     grid = Grid(args.rows, args.cols)
-    BinaryTreeMaze.on(grid)
+
+    # Apply selected maze generation algorithm
+    if args.algorithm == 'binary':
+        print(f"Generating maze using Binary Tree algorithm ({args.rows}x{args.cols})...")
+        BinaryTreeMaze.on(grid)
+        if args.explain:
+            print("\nBinary Tree Algorithm:")
+            print("This algorithm connects each cell to either north or east (chosen randomly).")
+            print("It creates a distinctive bias toward the northeast corner.")
+            print("All northern and eastern corridors are straight lines.")
+    else:  # sidewinder
+        print(f"Generating maze using Sidewinder algorithm ({args.rows}x{args.cols})...")
+        SidewinderMaze.on(grid)
+        if args.explain:
+            print("\nSidewinder Algorithm:")
+            print(SidewinderMaze.explain())
 
     # Always display the basic maze first
-    print("Generated Maze:")
+    print("\nGenerated Maze:")
     print(grid.display())
     print()
 
