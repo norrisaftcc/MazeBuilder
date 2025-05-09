@@ -29,54 +29,72 @@ class TestSidewinderMaze:
         """Test that vertical connections are created (except in top row)."""
         grid = Grid(10, 10)
 
-        # Mock random choice to always create north links (end runs immediately)
-        with patch('grid.Grid.random_int', return_value=0):
-            SidewinderMaze.on(grid)
-            
-            # Check that each cell in rows 1+ (except the northernmost) has a north link
-            north_links_count = 0
-            for r in range(1, grid.rows):
-                for c in range(grid.cols):
-                    if grid.at(r, c).linked(Cell.NORTH):
-                        north_links_count += 1
-            
-            # There should be vertical connections in a 10x10 grid
-            assert north_links_count > 0
-            
-            # In this special case (always end runs), each cell should link north
-            # except the northern row
-            expected_north_links = grid.rows * grid.cols - grid.cols  # Total cells - northern row
-            assert north_links_count == expected_north_links
+        # Replace grid's random_int to always return 0
+        # This makes it always close out runs immediately
+        original_random_int = grid.random_int
+        grid.random_int = lambda min_val, max_val: 0
+
+        # Run the algorithm
+        SidewinderMaze.on(grid)
+
+        # Restore original method
+        grid.random_int = original_random_int
+
+        # Check that each cell in rows 1+ (except the northernmost) has a north link
+        north_links_count = 0
+        for r in range(1, grid.rows):
+            for c in range(grid.cols):
+                if grid.at(r, c).linked(Cell.NORTH):
+                    north_links_count += 1
+
+        # There should be vertical connections in a 10x10 grid
+        assert north_links_count > 0
+
+        # In this special case (always end runs), each cell should link north
+        # except the northern row
+        expected_north_links = grid.rows * grid.cols - grid.cols  # Total cells - northern row
+        assert north_links_count == expected_north_links
     
     def test_horizontal_runs(self):
         """Test that horizontal runs are created when random choice favors east connections."""
         grid = Grid(10, 10)
 
-        # First mock call returns 1 (continue run), second returns 0 (end run)
-        # This creates runs of length 2
-        call_count = 0
-        def alternating_random(*args):
-            nonlocal call_count
-            call_count += 1
-            return call_count % 2  # Returns 1, 0, 1, 0, ...
+        # Make a more predictable grid.random_int
+        # Use a function to handle different types of random calls
+        call_count = [0]  # Use a list to store state (mutable)
 
-        with patch('grid.Grid.random_int', side_effect=alternating_random):
-            SidewinderMaze.on(grid)
-            
-            # Count horizontal connections
-            east_links_count = 0
-            for r in range(grid.rows):
-                for c in range(grid.cols - 1):  # Exclude rightmost column
-                    if grid.at(r, c).linked(Cell.EAST):
-                        east_links_count += 1
-            
-            # There should be horizontal connections
-            assert east_links_count > 0
-            
-            # Verify the pattern in bottom rows (not the northern row)
-            # With our alternating mock, every other cell should connect east
-            # This is a simplified check for demonstration purposes
-            assert east_links_count > grid.cols - 1  # More than just the northern row
+        def alternate_values(min_val, max_val):
+            call_count[0] += 1
+            # For the "should close run" decision, alternate between 0 and 1
+            if min_val == 0 and max_val == 1:
+                return call_count[0] % 2
+            # For picking a cell in the run, always pick the first cell
+            return 0
+
+        # Replace grid's random_int method
+        original_random_int = grid.random_int
+        grid.random_int = alternate_values
+
+        # Run the algorithm
+        SidewinderMaze.on(grid)
+
+        # Restore original method
+        grid.random_int = original_random_int
+
+        # Count horizontal connections
+        east_links_count = 0
+        for r in range(grid.rows):
+            for c in range(grid.cols - 1):  # Exclude rightmost column
+                if grid.at(r, c).linked(Cell.EAST):
+                    east_links_count += 1
+
+        # There should be horizontal connections
+        assert east_links_count > 0
+
+        # Verify the pattern in bottom rows (not the northern row)
+        # With our alternating mock, every other cell should connect east
+        # This is a simplified check for demonstration purposes
+        assert east_links_count > grid.cols - 1  # More than just the northern row
     
     def test_is_connected_maze(self):
         """Test that the maze is fully connected (all cells can reach all others)."""
