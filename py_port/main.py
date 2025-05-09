@@ -25,6 +25,9 @@ def display_with_path(grid, path, show_distances=False, distances=None, use_colo
         distances: The distances object (if show_distances is True)
         use_color: Whether to use color in the output
     """
+    # Define entrance and exit for special marking
+    entrance = grid.at(grid.rows-1, 0)  # Bottom left
+    exit = grid.at(0, grid.cols-1)      # Top right
     # Disable colors on Windows unless running in a modern terminal
     if platform.system() == "Windows" and "TERM" not in os.environ:
         use_color = False
@@ -35,11 +38,17 @@ def display_with_path(grid, path, show_distances=False, distances=None, use_colo
         GREEN_BG = "\033[42m"
         GREEN_TEXT = "\033[32m"
         CYAN_TEXT = "\033[36m"
+        RED_TEXT = "\033[31m"
+        YELLOW_TEXT = "\033[33m"
+        BOLD = "\033[1m"
     else:
         RESET = ""
         GREEN_BG = ""
         GREEN_TEXT = ""
         CYAN_TEXT = ""
+        RED_TEXT = ""
+        YELLOW_TEXT = ""
+        BOLD = ""
 
     # Helper function to check if a cell is on the path
     def is_on_path(row, col):
@@ -60,16 +69,35 @@ def display_with_path(grid, path, show_distances=False, distances=None, use_colo
             cell = grid.at(r, c)
 
             # Cell contents
-            if is_on_path(r, c):
-                # Path cell with optional distance
-                if show_distances and distances:
+            # Special rendering for entrance and exit cells
+            if cell.row == entrance.row and cell.col == entrance.col:
+                # Entrance cell (bottom left)
+                if is_on_path(r, c) and distances:
+                    dist = distances.get_distance(cell)
+                    if dist < 10:
+                        content = f"{YELLOW_TEXT}{BOLD} E{dist}{RESET}"
+                    else:
+                        content = f"{YELLOW_TEXT}{BOLD}E{dist}{RESET}"
+                else:
+                    content = f"{YELLOW_TEXT}{BOLD} E {RESET}"
+            elif cell.row == exit.row and cell.col == exit.col:
+                # Exit cell (top right)
+                if is_on_path(r, c) and distances:
+                    dist = distances.get_distance(cell)
+                    # Exit always has distance 0
+                    content = f"{RED_TEXT}{BOLD} X {RESET}"
+                else:
+                    content = f"{RED_TEXT}{BOLD} X {RESET}"
+            elif is_on_path(r, c):
+                # Path cell always shows distance to exit
+                if distances:
                     dist = distances.get_distance(cell)
                     if dist < 10:
                         content = f"{GREEN_TEXT} {dist} {RESET}"
                     else:
                         content = f"{GREEN_TEXT}{dist}{RESET} "
                 else:
-                    content = f"{GREEN_TEXT} X {RESET}"
+                    content = f"{GREEN_TEXT} * {RESET}"
             elif show_distances and distances:
                 # Regular cell with distance
                 dist = distances.get_distance(cell)
@@ -155,24 +183,22 @@ def main():
     print()
 
     if args.solve:
-        # Find the longest path through the maze (the true "solution")
-        solution = Dijkstra.longest_path(grid)
+        # Define entrance and exit
+        entrance = grid.at(grid.rows-1, 0)  # Bottom left
+        exit = grid.at(0, grid.cols-1)      # Top right
 
-        # If we want to show a path from top-left to bottom-right instead, use:
-        # start = grid.at(0, 0)
-        # end = grid.at(grid.rows-1, grid.cols-1)
-        # solution = Dijkstra.shortest_path(grid, start, end)
+        # Find the path from entrance to exit
+        solution = Dijkstra.shortest_path(grid, entrance, exit)
 
         if solution:
-            # Calculate distances from the goal
-            start_cell = solution[0]
-            distances = Dijkstra.calculate_distances(grid, start_cell)
+            # Calculate distances from the exit to show in each cell
+            distances = Dijkstra.calculate_distances(grid, exit)
 
-            print("Maze Solution:")
+            print(f"Maze Solution (from entrance at bottom left to exit at top right):")
             print(display_with_path(
                 grid,
                 solution,
-                show_distances=args.distances,
+                show_distances=True,  # Always show distances
                 distances=distances,
                 use_color=args.color
             ))
@@ -180,10 +206,7 @@ def main():
 
             print(f"Solution path length: {len(solution)} cells")
             print(f"Solution path steps: {len(solution) - 1} steps")
-
-            # Show path endpoints
-            end_cell = solution[-1]
-            print(f"Longest path: ({start_cell.row},{start_cell.col}) to ({end_cell.row},{end_cell.col})")
+            print(f"Path: Entrance ({entrance.row},{entrance.col}) to Exit ({exit.row},{exit.col})")
         else:
             print("No solution path found!")
 

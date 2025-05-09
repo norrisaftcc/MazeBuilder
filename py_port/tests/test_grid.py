@@ -93,19 +93,29 @@ class TestGrid:
         """Test maze display functionality."""
         # Create a simple 2x2 grid
         grid = Grid(2, 2)
-        
+
         # No links initially, should see all walls
         output = grid.display()
         assert "+---+---+" in output
         assert "|   |   |" in output
-        
+
         # Link some cells
         grid.link_cells(0, 0, Cell.EAST)
         grid.link_cells(0, 0, Cell.SOUTH)
-        
+
         # Get updated display
         output = grid.display()
-        
-        # Should have openings between linked cells
-        assert "|     |" in output  # East opening in top row
-        assert "+   +" in output    # South opening
+
+        # The grid display format looks like:
+        # +---+---+
+        # |       |
+        # +   +---+
+        # |   |   |
+        # +---+---+
+
+        # Check for specific patterns in the output
+        # The first row should have an opening to the east
+        assert "|       |" in output
+
+        # There should be a south opening from (0,0)
+        assert "+   +" in output
