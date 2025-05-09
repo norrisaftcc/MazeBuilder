@@ -16,9 +16,9 @@ The application can generate mazes, display them with colored text, find the "lo
 solution, and show distances from the start point to each cell.
 
 ## Sprint 2: Additional Maze Algorithms
-- [ ] Implement Sidewinder algorithm
-  - [ ] Add tests for Sidewinder algorithm
-  - [ ] Create command-line option to select algorithm
+- [x] Implement Sidewinder algorithm
+  - [x] Add tests for Sidewinder algorithm
+  - [x] Create command-line option to select algorithm
 - [ ] Implement Aldous-Broder algorithm
   - [ ] Add tests for Aldous-Broder algorithm
 - [ ] Create visualization that shows step-by-step algorithm execution
