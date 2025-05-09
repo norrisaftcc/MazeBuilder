@@ -245,3 +245,4 @@ ModelManifest.xml
 .fake/
 **/.claude/settings.local.json
 .DS_Store
+*.pyc

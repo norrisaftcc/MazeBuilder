@@ -1,7 +1,17 @@
 import heapq
-from .distances import Distances
-from ..cell import Cell
-from ..grid import Grid
+import sys
+import os
+
+# Add the parent directory to the path so we can import modules
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from cell import Cell
+from grid import Grid
+from pathfinding.distances import Distances
+
+# For debugging
+import logging
+logging.basicConfig(level=logging.DEBUG)
 
 class Dijkstra:
     """
@@ -52,49 +62,49 @@ class Dijkstra:
         """Find the shortest path between two cells."""
         # Calculate distances from start to all cells
         distances = Dijkstra.calculate_distances(grid, start)
-        
+
         # Reconstruct the path from end to start
         path = []
         current = end
         path.append(current)
-        
+
         # If end is unreachable, return empty path
         if distances.get_distance(end) == sys.maxsize:
             return []
-        
+
         # Walk backward from end to start, always choosing the neighbor
         # with the smallest distance value
         while current != start:
             row = current.row
             col = current.col
             current_distance = distances.get_distance(current)
-            
+
             next_cell = None
             next_distance = current_distance
-            
+
             # Check each linked neighbor
             for direction in current.get_links():
                 offset_row, offset_col = Grid.DIRECTION_OFFSETS[direction]
                 neighbor_row = row + offset_row
                 neighbor_col = col + offset_col
-                
+
                 if not grid.is_valid(neighbor_row, neighbor_col):
                     continue
-                
+
                 neighbor = grid.at(neighbor_row, neighbor_col)
                 neighbor_distance = distances.get_distance(neighbor)
-                
+
                 # If this neighbor is closer to the start
                 if neighbor_distance < next_distance:
                     next_cell = neighbor
                     next_distance = neighbor_distance
-            
+
             if next_cell is None:
                 break  # Something went wrong
-            
+
             path.append(next_cell)
             current = next_cell
-        
+
         # Reverse the path so it goes from start to end
         path.reverse()
         return path

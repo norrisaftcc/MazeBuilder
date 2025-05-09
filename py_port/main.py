@@ -1,5 +1,11 @@
 import sys
 import argparse
+import os
+
+# Add the current directory to the path so we can import modules
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from cell import Cell
 from grid import Grid
 from algorithms.binary_tree import BinaryTreeMaze
 from pathfinding.dijkstra import Dijkstra
@@ -64,15 +70,18 @@ def main():
     print()
     
     if args.solve:
-        # Find and display the solution path
-        solution = Dijkstra.longest_path(grid)
-        
+        # Find a path from the top-left to the bottom-right
+        start = grid.at(0, 0)
+        end = grid.at(grid.rows-1, grid.cols-1)
+        solution = Dijkstra.shortest_path(grid, start, end)
+
         print("Maze Solution:")
         print(display_with_path(grid, solution))
         print()
-        
+
         print(f"Solution path length: {len(solution)} cells")
         print(f"Solution path steps: {len(solution) - 1} steps")
+        print(f"Path from ({start.row},{start.col}) to ({end.row},{end.col})")
 
 if __name__ == "__main__":
     main()
