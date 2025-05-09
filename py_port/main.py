@@ -2,6 +2,7 @@ import sys
 import argparse
 import os
 import platform
+import random
 
 # Add the current directory to the path so we can import modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -10,6 +11,7 @@ from cell import Cell
 from grid import Grid
 from algorithms.binary_tree import BinaryTreeMaze
 from algorithms.sidewinder import SidewinderMaze
+from algorithms.aldous_broder import AldousBroderMaze
 from pathfinding.dijkstra import Dijkstra
 
 def display_with_path(grid, path, show_distances=False, distances=None, use_color=True):
@@ -105,32 +107,47 @@ def main():
     parser = argparse.ArgumentParser(description='Generate and display mazes')
     parser.add_argument('rows', nargs='?', type=int, default=10, help='Number of rows')
     parser.add_argument('cols', nargs='?', type=int, default=10, help='Number of columns')
-    parser.add_argument('--algorithm', '-a', choices=['binary', 'sidewinder'], default='binary',
-                        help='Maze generation algorithm to use')
+    parser.add_argument('--algorithm', '-a', choices=['binary', 'sidewinder', 'aldous-broder'],
+                        default='binary', help='Maze generation algorithm to use')
     parser.add_argument('--solve', action='store_true', help='Display solution path')
     parser.add_argument('--distances', action='store_true', help='Show distances from starting point')
     parser.add_argument('--color', action='store_true', help='Use color in output')
     parser.add_argument('--explain', action='store_true', help='Show explanation of the algorithm')
+    parser.add_argument('--seed', type=int, help='Random seed for reproducible maze generation')
     args = parser.parse_args()
 
     # Create grid
     grid = Grid(args.rows, args.cols)
 
     # Apply selected maze generation algorithm
+    seed_info = f" (seed: {args.seed})" if args.seed is not None else ""
+
     if args.algorithm == 'binary':
-        print(f"Generating maze using Binary Tree algorithm ({args.rows}x{args.cols})...")
+        print(f"Generating maze using Binary Tree algorithm ({args.rows}x{args.cols}){seed_info}...")
+        # Set the random seed if provided
+        if args.seed is not None:
+            random.seed(args.seed)
         BinaryTreeMaze.on(grid)
         if args.explain:
             print("\nBinary Tree Algorithm:")
-            print("This algorithm connects each cell to either north or east (chosen randomly).")
-            print("It creates a distinctive bias toward the northeast corner.")
-            print("All northern and eastern corridors are straight lines.")
-    else:  # sidewinder
-        print(f"Generating maze using Sidewinder algorithm ({args.rows}x{args.cols})...")
+            print(BinaryTreeMaze.explain())
+    elif args.algorithm == 'sidewinder':
+        print(f"Generating maze using Sidewinder algorithm ({args.rows}x{args.cols}){seed_info}...")
+        # Set the random seed if provided
+        if args.seed is not None:
+            random.seed(args.seed)
         SidewinderMaze.on(grid)
         if args.explain:
             print("\nSidewinder Algorithm:")
             print(SidewinderMaze.explain())
+    elif args.algorithm == 'aldous-broder':
+        print(f"Generating maze using Aldous-Broder algorithm ({args.rows}x{args.cols}){seed_info}...")
+        print("(This may take longer than other algorithms, especially for larger mazes...)")
+        grid, iterations = AldousBroderMaze.on(grid, seed=args.seed)
+        print(f"Completed in {iterations} iterations.")
+        if args.explain:
+            print("\nAldous-Broder Algorithm:")
+            print(AldousBroderMaze.explain())
 
     # Always display the basic maze first
     print("\nGenerated Maze:")

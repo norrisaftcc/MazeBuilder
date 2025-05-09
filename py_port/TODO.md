@@ -19,10 +19,13 @@ solution, and show distances from the start point to each cell.
 - [x] Implement Sidewinder algorithm
   - [x] Add tests for Sidewinder algorithm
   - [x] Create command-line option to select algorithm
-- [ ] Implement Aldous-Broder algorithm
-  - [ ] Add tests for Aldous-Broder algorithm
+- [x] Implement Aldous-Broder algorithm
+  - [x] Add tests for Aldous-Broder algorithm
+  - [x] Add support for max iterations parameter
+- [x] Add custom seed option for reproducible maze generation
+  - [x] Implement seed parameter for all algorithms
+  - [x] Test reproducibility with same seed
 - [ ] Create visualization that shows step-by-step algorithm execution
-- [ ] Add custom seed option for reproducible maze generation
 - [ ] Add ability to save/load mazes to files
 
 ## Sprint 3: Advanced Features
