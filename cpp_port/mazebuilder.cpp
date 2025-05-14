@@ -2,6 +2,7 @@
 #include <vector>
 #include <random>
 #include <ctime>
+#include <cstring>
 using namespace std;
 // TODO: Add better comments
 
@@ -205,10 +206,37 @@ public:
     }
 };
 
+void print_help(const char* program_name) {
+    cout << "MazeBuilder - A maze generation tool using the Binary Tree algorithm\n\n";
+    cout << "Usage: " << program_name << " [OPTIONS] [rows] [columns]\n\n";
+    cout << "Arguments:\n";
+    cout << "  rows          Number of rows in the maze (default: 10)\n";
+    cout << "  columns       Number of columns in the maze (default: 10)\n\n";
+    cout << "Options:\n";
+    cout << "  -h, --help    Show this help message and exit\n\n";
+    cout << "Examples:\n";
+    cout << "  " << program_name << "                    Generate a 10x10 maze\n";
+    cout << "  " << program_name << " 20                 Generate a 20x20 maze\n";
+    cout << "  " << program_name << " 15 25              Generate a 15x25 maze\n";
+    cout << "  " << program_name << " --help             Show this help message\n\n";
+    cout << "Algorithm:\n";
+    cout << "  Binary Tree: For each cell, randomly carve a passage either north or east.\n";
+    cout << "  Creates a perfect maze with exactly one path between any two points.\n";
+    cout << "  Has a bias toward the northeast corner.\n";
+}
+
 int main(int argc, char* argv[]) {
     // Default values for rows and columns
     int rows = 10;
     int cols = 10;
+    
+    // Check for help flag
+    for (int i = 1; i < argc; i++) {
+        if (strcmp(argv[i], "-h") == 0 || strcmp(argv[i], "--help") == 0) {
+            print_help(argv[0]);
+            return 0;
+        }
+    }
     
     // Parse command line arguments if provided
     if (argc > 1) {
