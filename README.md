@@ -27,6 +27,7 @@ Based on our progress, our priorities for Sprint 3 are:
 - Expand test coverage for edge cases
 
 # What's New
+- **Save/Load Functionality**: Save mazes to JSON files and load them later for display, solving, or interactive exploration
 - **Visualization Layer**: The Python port now features a dedicated visualization layer that separates rendering logic from maze algorithms
 - **Multiple Renderers**: Support for text-based (terminal), graphical (matplotlib), and interactive terminal (asciimatics) rendering
 - **Theme System**: Built-in themes including "Wizardry" and "Retro Terminal" styles
@@ -40,3 +41,4 @@ Based on our progress, our priorities for Sprint 3 are:
 - Performance optimization for large mazes
 - Interactive maze solving in the web UI
 - Add more themes and customization options
+- Extend save/load functionality to include metadata (algorithm used, generation time, etc.)

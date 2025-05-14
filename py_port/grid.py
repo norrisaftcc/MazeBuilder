@@ -1,6 +1,7 @@
 import random
 import sys
 import os
+import json
 
 # Add the current directory to the path so we can import modules
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -93,3 +94,54 @@ class Grid:
             output.append(''.join(eastern_boundary))
         
         return '\n'.join(output)
+    
+    def to_dict(self):
+        """Convert the grid to a dictionary representation."""
+        data = {
+            'rows': self.rows,
+            'cols': self.cols,
+            'cells': []
+        }
+        
+        for r in range(self.rows):
+            row_data = []
+            for c in range(self.cols):
+                cell = self.at(r, c)
+                cell_data = {
+                    'row': cell.row,
+                    'col': cell.col,
+                    'links': cell.links
+                }
+                row_data.append(cell_data)
+            data['cells'].append(row_data)
+        
+        return data
+    
+    @classmethod
+    def from_dict(cls, data):
+        """Create a Grid instance from a dictionary representation."""
+        rows = data['rows']
+        cols = data['cols']
+        grid = cls(rows, cols)
+        
+        # Restore cell links
+        for r in range(rows):
+            for c in range(cols):
+                cell_data = data['cells'][r][c]
+                cell = grid.at(r, c)
+                cell.links = cell_data['links']
+        
+        return grid
+    
+    def save_to_file(self, filename):
+        """Save the grid to a JSON file."""
+        data = self.to_dict()
+        with open(filename, 'w') as f:
+            json.dump(data, f, indent=2)
+    
+    @classmethod
+    def load_from_file(cls, filename):
+        """Load a grid from a JSON file."""
+        with open(filename, 'r') as f:
+            data = json.load(f)
+        return cls.from_dict(data)
