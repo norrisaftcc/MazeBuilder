@@ -15,6 +15,7 @@ This is a Python port of the MazeBuilder program, originally written in C# and C
 - Multiple visual themes (default, wizardry, retro)
 - Pathfinding using Dijkstra's algorithm
 - Finding the "solution" (longest shortest path) through the maze
+- Braiding: remove a fraction of dead ends to add loops (`--braid 0.5`), where wall-following stops working
 - Save/load mazes to/from JSON files
 
 ## Installation
