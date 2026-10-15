@@ -109,3 +109,28 @@ pytest
 # Run tests with coverage
 pytest --cov=.
 ```
+## Export to the Crawler
+
+`export_crawler.py` turns a maze into a pack for **the Crawler**, the first-person party crawler in the `games-osr-fort-on-lake` repository (`crawler/SPEC.md`). The pack is data only; the Crawler's own tools validate it and build it into one HTML page that opens from disk.
+
+```bash
+# Write a pack: an 8 by 8 Sidewinder maze, seed 7
+python export_crawler.py 8 8 --algorithm sidewinder --seed 7 --out out/hedge
+
+# Check, play and build it with the Crawler's tools
+CRAWLER=../../games-osr-fort-on-lake/crawler
+node $CRAWLER/tools/validate.mjs out/hedge        # OK hedge
+node crawler_walk.mjs $CRAWLER out/hedge          # the replay reaches the far gate
+node $CRAWLER/tools/build.mjs out/hedge --out out/hedge.html
+```
+
+What the exporter does:
+
+- A maze cell is a 10-foot floor square. A link is a floor square between two cells. Everything else is wall.
+- Dijkstra's longest path picks the entrance (a stair back to town) and the exit (a stair out, and an ending).
+- Distance bands from the entrance become the Crawler's areas, so the clock ticks as the party goes deeper.
+- Dead ends off the solution hold rat fights (`--fights`, default 3). The deepest dead end holds the treasure.
+- A plate at the entrance states the algorithm's **tell**: Binary Tree always opens north or east; Sidewinder has one gate north per run; Aldous-Broder has no rule, and the plate says so.
+- `replay.json` is `{seed, commands}`: a whole game that walks the solution. `crawler_walk.mjs` plays it against the engine and fights through whatever wanders in.
+
+The party, items, abilities, monsters, rules and theme are copied from the Crawler's test fixture; they live in `crawler_base/`. Change them there, or edit the written pack by hand.
