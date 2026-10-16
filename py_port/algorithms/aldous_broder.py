@@ -91,6 +91,11 @@ class AldousBroderMaze:
                 iterations += 1
                 next_row, next_col, direction = neighbors[grid.random_int(0, len(neighbors) - 1)]
                 
+                # The cell's own row and col: on a polar grid the column wraps,
+                # and (r, -1) and (r, cols - 1) are the same cell
+                next_cell = grid.at(next_row, next_col)
+                next_row, next_col = next_cell.row, next_cell.col
+
                 # If the chosen neighbor has not been visited
                 if (next_row, next_col) not in visited:
                     # Connect current cell to the neighbor
@@ -102,7 +107,7 @@ class AldousBroderMaze:
                 
                 # Move to the chosen neighbor
                 current_row, current_col = next_row, next_col
-                current_cell = grid.at(current_row, current_col)
+                current_cell = next_cell
             else:
                 # No neighbors (should never happen in a fully connected grid)
                 break

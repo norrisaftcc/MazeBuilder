@@ -9,6 +9,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from cell import Cell
 from grid import Grid
+from polar_grid import PolarGrid
 from algorithms.binary_tree import BinaryTreeMaze
 from algorithms.sidewinder import SidewinderMaze
 from algorithms.aldous_broder import AldousBroderMaze
@@ -55,10 +56,12 @@ def main():
                         default='default', help='Visual theme to use for display')
     parser.add_argument('--braid', type=float, default=0.0, metavar='P',
                         help='Remove this fraction of dead ends (0.0 to 1.0), adding loops')
+    parser.add_argument('--polar', action='store_true',
+                        help='A polar grid: rows are rings around a well, columns are spokes and wrap round')
     args = parser.parse_args()
 
     # Create grid
-    grid = Grid(args.rows, args.cols)
+    grid = PolarGrid(args.rows, args.cols) if args.polar else Grid(args.rows, args.cols)
 
     # Apply selected maze generation algorithm
     seed_info = f" (seed: {args.seed})" if args.seed is not None else ""
@@ -99,6 +102,8 @@ def main():
 
     # Always display the basic maze first
     print("\nGenerated Maze:")
+    if args.polar:
+        print(f"(polar: {args.rows} rings of {args.cols} spokes, unrolled; north is inward, east is sunwise)")
     print(grid.display())
     print()
 
