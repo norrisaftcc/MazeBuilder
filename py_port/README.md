@@ -16,6 +16,7 @@ This is a Python port of the MazeBuilder program, originally written in C# and C
 - Pathfinding using Dijkstra's algorithm
 - Finding the "solution" (longest shortest path) through the maze
 - Braiding: remove a fraction of dead ends to add loops (`--braid 0.5`), where wall-following stops working
+- Polar grids: rings around a well, spokes that wrap round (`--polar`); the same algorithms, a seam along one spoke, and a different tell (`polar_grid.py`)
 - Save/load mazes to/from JSON files
 
 ## Installation
