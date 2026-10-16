@@ -12,6 +12,7 @@ from grid import Grid
 from algorithms.binary_tree import BinaryTreeMaze
 from algorithms.sidewinder import SidewinderMaze
 from algorithms.aldous_broder import AldousBroderMaze
+from algorithms.braid import Braid
 from pathfinding.dijkstra import Dijkstra
 
 def display_with_path(grid, path, show_distances=False, distances=None, use_color=True, theme_name="default"):
@@ -52,6 +53,8 @@ def main():
     parser.add_argument('--seed', type=int, help='Random seed for reproducible maze generation')
     parser.add_argument('--theme', '-t', choices=ThemeManager.list_themes(),
                         default='default', help='Visual theme to use for display')
+    parser.add_argument('--braid', type=float, default=0.0, metavar='P',
+                        help='Remove this fraction of dead ends (0.0 to 1.0), adding loops')
     args = parser.parse_args()
 
     # Create grid
@@ -86,6 +89,13 @@ def main():
         if args.explain:
             print("\nAldous-Broder Algorithm:")
             print(AldousBroderMaze.explain())
+
+    if args.braid:
+        knocked = Braid.on(grid, args.braid)
+        print(f"Braided: {knocked} dead ends joined to a neighbour ({len(Braid.dead_ends(grid))} left).")
+        if args.explain:
+            print("\nBraiding:")
+            print(Braid.explain())
 
     # Always display the basic maze first
     print("\nGenerated Maze:")
